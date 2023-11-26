@@ -17,18 +17,11 @@ text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 docs = text_splitter.split_documents(documents)
 
 embeddings = OpenAIEmbeddings()
+embeddings_data={'data':embeddings}
 with open('embeddings.pickle', 'wb') as handle:
-    pickle.dump(embeddings, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    pickle.dump(embeddings_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
 vectordb=Chroma.from_documents(documents=docs,embedding=embeddings,persist_directory=persist_directory)
 vectordb.persist()
 
 
-# vector_db = Milvus.from_documents(
-#     docs,
-#     embeddings,
-#     connection_args={"host": "127.0.0.1", "port": "19530"},
-# )
-
-# docs=db.similarity_search('Fogify')
-# print(docs[0].page_content)
