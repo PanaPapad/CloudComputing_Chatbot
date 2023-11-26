@@ -25,9 +25,10 @@ documents=read_list()
 text_splitter = RecursiveCharacterTextSplitter(
 chunk_size=1000, chunk_overlap=0, separators=[" ", ",", "\n"]
 )
+
 all_chunk_embeddings=[]
+
 for doc in documents:
-    
     chunks = text_splitter.split_documents(doc)
     all_chunk_embeddings.extend(chunks)
     

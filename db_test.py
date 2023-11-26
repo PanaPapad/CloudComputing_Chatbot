@@ -4,6 +4,7 @@ from langchain.llms import OpenAI
 from langchain.chains import VectorDBQA
 import pickle
 from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.chains.question_answering import load_qa_chain
 
 persist_directory = '/data/CHROMA_DB'
 # with open('embeddings.pickle', 'rb') as handle:
@@ -21,4 +22,10 @@ embeddings = HuggingFaceEmbeddings(
 # print(qa.run(query))
 vector_db = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
 q = "Fogify"
-v = vector_db.similarity_search(q, include_metadata=True)
+qa = VectorDBQA.from_chain_type(llm=emb_model, chain_type="stuff", vectorstore=vector_db)
+
+print(qa.run(q))
+# v = vector_db.similarity_search(q, include_metadata=True)
+# chain = load_qa_chain(chat, chain_type="stuff")
+# res = chain({"input_documents": v, "question": q})
+# print(res["output_text"])
