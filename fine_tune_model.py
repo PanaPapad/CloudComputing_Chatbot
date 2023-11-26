@@ -41,7 +41,7 @@ Answer: """
 prompt = PromptTemplate(input_variables=[ 'question'],template=template)
 repo_id = "gpt2"  # See https://huggingface.co/models?pipeline_tag=text-generation&sort=downloads for some other options
 llm = HuggingFaceHub(
-    repo_id=repo_id, model_kwargs={"temperature": 0.5, "max_length":500}
+    repo_id=repo_id, model_kwargs={"temperature": 1.0, "max_length":500}
 )
 
 llm_chain = LLMChain(prompt=prompt, llm=llm,verbose=True)
