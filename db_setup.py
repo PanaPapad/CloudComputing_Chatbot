@@ -17,9 +17,9 @@ text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 docs = text_splitter.split_documents(documents)
 
 embeddings = OpenAIEmbeddings()
-embeddings_data={'data':embeddings}
-with open('embeddings.pickle', 'wb') as handle:
-    pickle.dump(embeddings_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
+# embeddings_data={'data':embeddings}
+# with open('embeddings.pickle', 'wb') as handle:
+#     pickle.dump(embeddings_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
 vectordb=Chroma.from_documents(documents=docs,embedding=embeddings,persist_directory=persist_directory)
 vectordb.persist()
