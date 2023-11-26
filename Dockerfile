@@ -11,7 +11,9 @@ RUN apt update && apt upgrade -y
 RUN pip install requests beautifulsoup4 html2text pygments langchain pymilvus openai
 RUN pip install sentence_transformers
 RUN apt update && apt upgrade -y
-
+RUN pip install pysqlite3-binary
+RUN pip install pickle
+RUN pip install tiktoken
 ENTRYPOINT /bin/bash
 
 #docker run --privileged -v C:\Users\Panagiotis\Documents\Code\CloudProj\CloudComputing_Chatbot\:/data -it cloudchat /bin/bash
