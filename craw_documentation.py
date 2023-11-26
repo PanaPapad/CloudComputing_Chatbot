@@ -1,4 +1,5 @@
-from IPython.display import clear_output
+# from IPython.display import clear_output"""  """
+from urllib.parse import urljoin
 
 urls = "https://ucy-linc-lab.github.io/fogify/"
 
