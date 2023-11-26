@@ -7,7 +7,7 @@ from langchain.document_loaders import text
 from langchain.vectorstores import Chroma
 from langchain.text_splitter import CharacterTextSplitter
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 
 loader = TextLoader("/data/url_content.txt")

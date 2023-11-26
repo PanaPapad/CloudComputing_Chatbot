@@ -14,4 +14,4 @@ RUN apt update && apt upgrade -y
 
 ENTRYPOINT /bin/bash
 
-#docker run --privileged -v /home/santoryu/Documents/GitHub/CloudComputing_Chatbot/:/data -it chatbot /bin/bash
+#docker run --privileged -v C:\Users\Panagiotis\Documents\Code\CloudProj\CloudComputing_Chatbot\:/data -it cloudchat /bin/bash
