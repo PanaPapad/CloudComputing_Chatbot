@@ -12,6 +12,7 @@ RUN apt update && apt upgrade -y
 RUN pip install pickle5
 RUN pip install tiktoken
 RUN pip install chromadb
+RUN pip install huggingface_hub
 ENTRYPOINT /bin/bash
 
 #docker run --privileged -v C:\Users\Panagiotis\Documents\Code\CloudProj\CloudComputing_Chatbot\:/data -it cloudchat /bin/bash

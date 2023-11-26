@@ -17,11 +17,9 @@ embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 
 vector_db = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
-# v = vector_db.similarity_search(q, include_metadata=True)
-# chain = load_qa_chain(chat, chain_type="stuff")
-# res = chain({"input_documents": v, "question": q})
-# print(res["output_text"])
+
 
 query = "Fogify"
 matching_docs = vector_db.similarity_search(query)
 print(matching_docs[0])
+print(f'NUmber of matching docs {len (matching_docs)}')

@@ -41,6 +41,6 @@ vectordb = Chroma.from_documents(all_chunk_embeddings,
 # vectordb=Chroma.from_documents(documents=docs,embedding=embeddings,persist_directory=persist_directory)
 vectordb.persist()
 
-query = "Fogify"
-matching_docs = vectordb.similarity_search(query)
-print(matching_docs[0])
+# query = "Fogify"
+# matching_docs = vectordb.similarity_search(query)
+# print(matching_docs[0])
