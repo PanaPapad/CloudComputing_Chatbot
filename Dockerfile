@@ -12,7 +12,7 @@ RUN pip install requests beautifulsoup4 html2text pygments langchain pymilvus op
 RUN pip install sentence_transformers
 RUN apt update && apt upgrade -y
 RUN pip install pysqlite3-binary
-RUN pip install pickle
+RUN pip install pickle5
 RUN pip install tiktoken
 ENTRYPOINT /bin/bash
 

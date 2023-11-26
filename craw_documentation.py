@@ -1,6 +1,6 @@
 # from IPython.display import clear_output"""  """
 from urllib.parse import urljoin
-
+import pickle 
 urls = "https://ucy-linc-lab.github.io/fogify/"
 
 from langchain.document_transformers import Html2TextTransformer
@@ -38,9 +38,19 @@ def crawlulr(start_url):
           url_contents.append(docs_transformed)
   else:
       print("Failed to retrieve the page")
-  with open('/data/url_content.txt', 'w') as fp:
-    for item in url_contents:
-        # write each item on a new line
-        fp.write("%s\n" % item)
-    print('Done')
+  write_list(url_contents)
+
+# Read list to memory
+def read_list():
+    # for reading also binary mode is important
+    with open('data/urlcontent.pickle', 'rb') as fp:
+        n_list = pickle.load(fp)
+        return n_list
+    
+def write_list(a_list):
+    # store list in binary file so 'wb' mode
+    with open('data/urlcontent.pickle', 'wb') as fp:
+        pickle.dump(a_list, fp)
+        print('Done writing list into a binary file')
 crawlulr(urls)
+print(len(read_list()))
