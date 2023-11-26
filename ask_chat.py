@@ -1,4 +1,4 @@
-import openai
+from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 import chromadb
 import numpy as np
@@ -27,20 +27,20 @@ def get_relevant_context(question, collection):
         return "No relevant documents found."
 
 def get_openai_response(question, context, openai_api_key):
-    openai.api_key = openai_api_key
+    client = OpenAI(api_key=openai_api_key)
+    if not context.strip():
+        return "No relevant information found to answer the question."
     prompt = context + "\nUser: " + question + "\nFogify Chatbot:"
     try:
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=150
-        )
+        response = client.completions.create(model="text-davinci-003",
+        prompt=prompt,
+        max_tokens=150)
         return response.choices[0].text.strip()
     except Exception as e:
         return str(e)
 
 def main():
-    openai_api_key = 'your-api-key-here'  # Replace with your OpenAI API key
+    openai_api_key = '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'  # Replace with your OpenAI API key
     
     while True:
         user_input = input("Ask the Fogify Chatbot: ")
