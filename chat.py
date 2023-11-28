@@ -8,11 +8,11 @@ from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain.vectorstores import Chroma
 import warnings
 import os
-
+warnings.simplefilter("ignore")
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = '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'
 template = """
-Some information about the fogify tool: 
-Fogify is an emulation Framework easing the modeling, deployment 
+You are a chatbot that is used to talk to users about a simulation platform 
+called Fogify. Fogify is an emulation Framework easing the modeling, deployment 
 and experimentation of fog testbeds. 
 Fogify provides a toolset to: model complex 
 fog topologies comprised of heterogeneous resources,
@@ -24,6 +24,8 @@ by injecting faults and adapting the configuration at runtime
 to test different "what-if" scenarios that reveal the
 limitations of a service before introduced to the public.
 
+{context}
+
 Question: {question}
 
 Answer: """
@@ -31,7 +33,7 @@ Answer: """
 prompt = PromptTemplate(input_variables=['question'], template=template)
 repo_id = "gpt2"  # See https://huggingface.co/models?pipeline_tag=text-generation&sort=downloads for some other options
 llm = HuggingFaceHub(
-    repo_id=repo_id, model_kwargs={"temperature": 1.0, "max_length": 500}
+    repo_id="gpt2" , model_kwargs={"temperature": 1.0, "max_length": 500}
 )
 
 llm_chain = LLMChain(prompt=prompt, llm=llm, verbose=True)
@@ -49,13 +51,14 @@ def read_and_return_DB():
     vector_db = Chroma(persist_directory=persist_directory, embedding_function=embeddings)  
     return vector_db
 
-def get_relevant_context (user_input,vector_db):None
+def get_relevant_context (user_input,vector_db):
+   docs=vector_db.similarity_search(user_input)
+   for doc in docs:
+       print(str(doc))
+   return ' '.join(str(docs))
 
-def setup():
-    
-    question = "What is fogify?"
-
-    response = llm_chain.run({'question': question})
+def ask_model(question,context):
+    response = llm_chain.run({'question': question,'context':context})
     return response
 
 def main():
@@ -64,18 +67,19 @@ def main():
     
     #read database
     vector_db=read_and_return_DB()
-    #warnings.simplefilter("ignore")
+    #
     while True:
         user_input = input("User: ")
         if user_input.lower() == 'exit':
             break
-        # context = get_relevant_context(user_input, vector_db)
+        context = get_relevant_context(user_input, vector_db)
         # response = get_openai_response(user_input, context)
         # response=create_prompt(user_input)
-        response = setup()
-        # print response type
+        response = ask_model(user_input,context)
+        # # print response type
         print(response)
         # print("Fogify Chatbot:", response)
 
 if __name__ == "__main__":
     main()
+

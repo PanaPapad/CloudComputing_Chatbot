@@ -46,7 +46,7 @@ llm = HuggingFaceHub(
 
 llm_chain = LLMChain(prompt=prompt, llm=llm,verbose=True)
 
-print(llm_chain.run({ 'question':question}))
+print(llm_chain.run({'question':question}))
 
 # import pickle
 # def read_list():
