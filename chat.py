@@ -30,7 +30,7 @@ Question: {question}
 
 Answer: """
 
-prompt = PromptTemplate(input_variables=['question'], template=template)
+prompt = PromptTemplate(input_variables=['question','context'], template=template)
 repo_id = "gpt2"  # See https://huggingface.co/models?pipeline_tag=text-generation&sort=downloads for some other options
 llm = HuggingFaceHub(
     repo_id="gpt2" , model_kwargs={"temperature": 1.0, "max_length": 500}
@@ -53,9 +53,8 @@ def read_and_return_DB():
 
 def get_relevant_context (user_input,vector_db):
    docs=vector_db.similarity_search(user_input)
-   for doc in docs:
-       print(str(doc))
-   return ' '.join(str(docs))
+   
+   return ' '.join([str(docs[0])])
 
 def ask_model(question,context):
     response = llm_chain.run({'question': question,'context':context})
@@ -72,7 +71,8 @@ def main():
         user_input = input("User: ")
         if user_input.lower() == 'exit':
             break
-        context = get_relevant_context(user_input, vector_db)
+        # context = get_relevant_context(user_input, vector_db)
+        context=''
         # response = get_openai_response(user_input, context)
         # response=create_prompt(user_input)
         response = ask_model(user_input,context)
