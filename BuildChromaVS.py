@@ -35,7 +35,7 @@ for root, dirs, files in os.walk(docs_dir):
         if file.endswith(".xml") or file.endswith(".md") or file.endswith(".html") or file.endswith(".yaml"):
             # Load the document, split it into chunks, embed each chunk and load it into the vector store.
             raw_document = TextLoader(os.path.join(root, file)).load()
-            text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+            # text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
             text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
                                                chunk_overlap=0,
                                                separators=[" ", ",", "\n"])
