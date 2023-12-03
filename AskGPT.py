@@ -24,8 +24,7 @@ llm = ChatOpenAI()
 prompt = ChatPromptTemplate(
     messages=[
         SystemMessagePromptTemplate.from_template(
-            "You are chatbot that helps a human with the fogify tool."
-        ),
+            "You are a chatbot that is used to talk to users about a simulation platform called Fogify. Fogify is an emulation Framework easing the modeling, deployment and experimentation of fog testbeds. Fogify provides a toolset to: model complex fog topologies comprised of heterogeneous resources, network capabilities and QoS criteria; deploy the modelled configuration and services using popular containerized infrastructure-as-code descriptions to a cloud or local environment; experiment, measure and evaluate the deployment by injecting faults and adapting the configuration at runtime to test different what-if scenarios that reveal the limitations of a service before introduced to the public." ),
         MessagesPlaceholder(variable_name="chat_history"),
         SystemMessagePromptTemplate.from_template(
             "Context: {context}"
@@ -56,7 +55,7 @@ def get_context(question):
     return context
 
 def get_question():
-    question = input("Question: ")
+    question = input("\nUser: ")
     return question
 
 def ask_ai(question):
