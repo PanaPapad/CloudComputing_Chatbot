@@ -21,7 +21,9 @@ def is_docker():
     
 def crawlulr(start_url):
     url_contents=[]
-    
+    text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
+                                               chunk_overlap=0,
+                                               separators=[" ", ",", "\n"])
     # Send a GET request to the URL
     response = requests.get(start_url)
 
@@ -47,8 +49,10 @@ def crawlulr(start_url):
                 docs = loader.load()
                 html2text = Html2TextTransformer()
                 docs_transformed = html2text.transform_documents(docs)
-
-                url_contents.append(docs_transformed)
+                
+                documents = text_splitter.split_documents(docs_transformed)
+                for doc in documents:
+                    url_contents.append(Document(doc))
             except:
                 continue
 
@@ -80,6 +84,8 @@ text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
                                                chunk_overlap=0,
                                                separators=[" ", ",", "\n"])
 html2text = Html2TextTransformer()
+# documents=(crawlulr(urls))
+# vectorstore.add_documents(documents)
 
 for root, dirs, files in os.walk(docs_dir):
     for file in files:
@@ -92,18 +98,16 @@ for root, dirs, files in os.walk(docs_dir):
             documents = text_splitter.split_documents(raw_document)
             vectorstore.add_documents(documents)
             
-        if file.endswith('.html') > 0:
+        if file.endswith('.html') :
             # file_path = os.path.join(root, file)
             # with open(file_path, 'r', encoding='utf-8') as file:
             raw_document = TextLoader(os.path.join(root, file)).load()
             documents = text_splitter.split_documents(raw_document)
             documents=html2text.transform_documents(documents)
+            # print(documents)
             vectorstore.add_documents((documents))
-                # documents=Document(text)
-                # for document in documents:
-                #     document.page_content = clean_html(document.page_content)
 
-# documents.extend(crawlulr(urls))
+
         
             
 vectorstore.persist()
