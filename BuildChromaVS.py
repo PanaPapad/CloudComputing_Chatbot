@@ -46,7 +46,7 @@ for root, dirs, files in os.walk(docs_dir):
                     document.page_content = clean_html(document.page_content)
 
 
-vectorstore.add_documents(documents)
+            vectorstore.add_documents(documents)
 vectorstore.persist()
 print(vectorstore.similarity_search("What is Fogify?"))
 
