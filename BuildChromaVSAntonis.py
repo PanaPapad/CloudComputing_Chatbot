@@ -70,7 +70,7 @@ def clean_html(raw_html):
 os.environ["OPENAI_API_KEY"] = "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"
 
 embeddings = OpenAIEmbeddings()
-vectorstore = Chroma("langchain_store", embeddings, persist_directory="./data/CHROMA_DB_3")
+vectorstore = Chroma("langchain_store", embeddings, persist_directory="./data/CHROMA_DB_4") #3 is stable
 vectorstore.persist()
 
 if is_docker():
@@ -89,7 +89,7 @@ html2text = Html2TextTransformer()
 
 for root, dirs, files in os.walk(docs_dir):
     for file in files:
-        if file.endswith(".xml") or file.endswith(".md") or file.endswith(".yaml"):
+        if file.endswith(".xml") or file.endswith(".md"):# or file.endswith(".yaml"):
             # Load the document, split it into chunks, embed each chunk and load it into the vector store.
             raw_document = TextLoader(os.path.join(root, file)).load()
             # text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
