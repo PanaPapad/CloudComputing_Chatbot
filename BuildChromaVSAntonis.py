@@ -10,7 +10,7 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 from langchain.document_loaders import AsyncHtmlLoader
-urls = "https://ucy-linc-lab.github.io/fogify/"
+# urls = "https://ucy-linc-lab.github.io/fogify/"
 
 def is_docker():
     path = '/proc/self/cgroup'
@@ -19,44 +19,6 @@ def is_docker():
         os.path.isfile(path) and any('docker' in line for line in open(path))
     )
     
-def crawlulr(start_url):
-    url_contents=[]
-    text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
-                                               chunk_overlap=0,
-                                               separators=[" ", ",", "\n"])
-    # Send a GET request to the URL
-    response = requests.get(start_url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Parse the HTML content
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        # Find all 'a' tags (links) in the page
-        links = soup.find_all('a')
-        
-        # Extract and print all URLs
-        for link in links:
-            try:
-                # Get the href attribute of each 'a' tag
-                href = link.get('href')
-
-                # Join the URL if it's relative
-                full_url = urljoin(start_url, href)
-
-                print(f"Crawling url: {full_url}")
-                loader = AsyncHtmlLoader(full_url)
-                docs = loader.load()
-                html2text = Html2TextTransformer()
-                docs_transformed = html2text.transform_documents(docs)
-                
-                documents = text_splitter.split_documents(docs_transformed)
-                for doc in documents:
-                    url_contents.append(Document(doc))
-            except:
-                continue
-
-    return url_contents
 
 def clean_html(raw_html):
     # html2text = Html2TextTransformer()
@@ -84,8 +46,6 @@ text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
                                                chunk_overlap=300,
                                                separators=[" ", ",", "\n"])
 html2text = Html2TextTransformer()
-# documents=(crawlulr(urls))
-# vectorstore.add_documents(documents)
 
 for root, dirs, files in os.walk(docs_dir):
     for file in files:
