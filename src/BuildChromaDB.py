@@ -43,8 +43,8 @@ else:
 
 # documents=[]
 # Read all documents including subdirectories
-text_splitter=RecursiveCharacterTextSplitter(chunk_size=2000,
-                                               chunk_overlap=500
+text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
+                                               chunk_overlap=0,separators=[" ", ",", "\n"]
                                               )
 html2text = Html2TextTransformer()
 

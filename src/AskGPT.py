@@ -15,7 +15,7 @@ os.environ["OPENAI_API_KEY"] = "sk-WzRuqKRHH777Ai7MLD3gT3BlbkFJR1cRkq8fMHHQlohJn
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = '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'
 
 # Vectorstore
-vectorstore = Chroma("langchain_store", OpenAIEmbeddings(), persist_directory="./data/CHROMA_DB_test")
+vectorstore = Chroma("langchain_store", OpenAIEmbeddings(), persist_directory="./data/CHROMA_DB_STABLE")
 
 # Load GPT-3.5-turbo-1106
 llm = ChatOpenAI()
@@ -62,9 +62,12 @@ def ask_ai(question):
     context = get_context(question)
     dict = {"question": question, "context": context}
     response = llm_chain(dict)
-    print("AI: " + response.get("text"))
+    print("CHATBOT: " + response.get("text"))
+    print()
 
 def main():
+    print("CHATBOT: Hello, i am the Fogify chatbot how can i help you.")
+    
     while True:
         question = get_question()
         if(question == 'exit'):
