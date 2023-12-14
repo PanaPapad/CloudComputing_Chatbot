@@ -1,2 +1,81 @@
 \section{Implementation}
 \label{sec:implementation}
+
+\subsection[short]{Documentation}
+
+In order to have a complete image of what the Fogify tool is and what it can
+do, we downloaded the documentation. The documentation is made up of various
+HTML files that contain information about the tool, how it works and its
+different variable configurations. It also contains a large number of files
+that
+compose the Fogify tool. We only focus on the HTML files that contain data and
+explanations about the Fogify tool.
+We download the documentation by cloning the GitHub repository of the Fogify
+tool.
+
+We then go through the repository, read the HTML files, remove the tags and the
+HTML metadata, and then recursively split the text to chunks of 1000 tokens
+with a 300 token overlap.
+
+\subsection{Vector Store}
+
+Having the documentation itself is not enough to do what we need. Searching
+text-based
+files for information would be very difficult. The difficulty in the search
+is extracting the most relevant information. Simple text searches would
+yield many results but most of them would be irrelevant to what we need.
+
+To tackle this issue, we used a vector store database. A vector store is a
+collection of
+data in the form of vectors that can be queried to retrieve the most relevant
+data. We store the chunks we created above along with their embeddings in the
+ChromaDB vector store. Using a vector store we get the most relevant
+results of a search by also taking into consideration the semantic meaning of
+the sentences compared.
+
+Creating the vector store does require some steps. We first decide the
+vector store engine to use for our application. We use ChromaDB since it is
+well
+integrated with the Langchain library. Inserting the documentation in the
+vector store requires two steps. First, we read all the files and break
+them up into smaller pieces. After breaking the files into smaller pieces, we
+transform these pieces into embeddings that can be stored in the
+vector store. We use embeddings of OpenAI. Langchain provides an easy
+method of using the OpenAI embeddings in this process and since we aim to use
+a LLM from OpenAI we take advantage of it. Finally,
+when all the pieces have been transformed into embeddings, we insert
+them into our vector store.
+
+By default, the vector store is stored in memory and is lost when the
+program/script exits. In order to save our vector store and then restore it
+during the actual use of the chatbot we use persistent storage. We dump the
+database in a file
+from which we can load it back into memory later.
+
+\subsection[short]{LLM}
+At this point we store all the documentation of the Fogify tool inside a vector
+store
+that we can query to get the most relevant data. In order to make sense of the
+relevant data we use a Large Language Model, specifically "gpt-3.5-turbo". This
+LLM accepts what
+information we give to it and returns a response based on what it was given.
+
+To have a reasonable response we need give our LLM three things.
+First, we provide the LLM with our question. Second, provide some
+context to the LLM to make sense of what the question is about along with
+the information that it needs to give us a proper response. The context is
+provided by the vector store database and contains the most relevant
+information to the question of the user. Basically, the context is the result
+of performing
+a similarity search in the data of stored in the vector store database. Third,
+we
+keep some sort of memory of previous conversations between the user and the
+LLM. These
+three pieces of information compose our prompt and theoretically provide the
+LLM
+enough context for which to answer with a reasonable response to the user's
+question.
+
+We also add some other data in the prompts such a welcoming message that
+explains what the conversation between the chatbot and the user will be about.
+The process we described is called prompt engineering.

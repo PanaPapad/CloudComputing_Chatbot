@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.6.7)  14 DEC 2023 15:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.6.7)  14 DEC 2023 19:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -854,42 +854,66 @@ LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 8.0pt on input line 235.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 6.2pt on input line 235.
- (./introduction.tex) (./background.tex) (./methodology.tex) (./implementation.tex) (./evaluation.tex
+ (./introduction.tex) (./background.tex
+Underfull \vbox (badness 1436) has occurred while \output is active []
+
+ [1.1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+]) (./methodology.tex
+<figures/methodology-pipline.png, id=81, 614.295pt x 570.13pt>
+File: figures/methodology-pipline.png Graphic file (type png)
+<use figures/methodology-pipline.png>
+Package pdftex.def Info: figures/methodology-pipline.png  used on input line 5.
+(pdftex.def)             Requested size: 227.62204pt x 211.25798pt.
+
+
+Class acmart Warning: A possible image without description on input line 9.
+
+) (./implementation.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 5.
+(Font)              scaled to size 9.0pt on input line 79.
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 7.0pt on input line 79.
+ [2.2 <./figures/methodology-pipline.png>]) (./evaluation.tex
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 5.
-) (./conclusion.tex) (/usr/share/texlive/texmf-dist/tex/generic/stringenc/se-pdfdoc.def
+(Font)              scaled to size 9.0pt on input line 11.
+) (./conclusion.tex) (./main.bbl) (/usr/share/texlive/texmf-dist/tex/generic/stringenc/se-pdfdoc.def
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 ) (/usr/share/texlive/texmf-dist/tex/generic/stringenc/se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 )
 
+Class acmart Warning: Some images may lack descriptions.
+
+
+Class acmart Warning: ACM keywords are mandatory for papers over two pages.
+
+
+Class acmart Warning: CCS concepts are mandatory for papers over two pages.
+
+
 Package balance Warning: You have called \balance in second column
 (balance)                Columns might not be balanced.
 
-[1.1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-
-]
-LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 245.
- [2.2] (./main.aux)
+[3.3] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E68368359F4ED702A6401B37C798E7D3;1076.
+(rerunfilecheck)             Checksum: F074267C714E017DC07AE65DD93B6C6C;1324.
  ) 
 Here is how much of TeX's memory you used:
- 22225 strings out of 478287
- 357649 string characters out of 5849290
- 726495 words of memory out of 5000000
- 39593 multiletter control sequences out of 15000+600000
- 595375 words of font info for 228 fonts, out of 8000000 for 9000
+ 22336 strings out of 478287
+ 359681 string characters out of 5849290
+ 725426 words of memory out of 5000000
+ 39634 multiletter control sequences out of 15000+600000
+ 599280 words of font info for 255 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 84i,11n,131p,1063b,481s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,12n,131p,1063b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinBiolinumT.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinBiolinumTI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb>
-Output written on main.pdf (2 pages, 387844 bytes).
+Output written on main.pdf (3 pages, 450182 bytes).
 PDF statistics:
- 105 PDF objects out of 1000 (max. 8388607)
- 83 compressed objects within 1 object stream
- 15 named destinations out of 1000 (max. 500000)
- 71769 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 162 PDF objects out of 1000 (max. 8388607)
+ 136 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 73846 words of extra memory for PDF output out of 74296 (max. 10000000)
 

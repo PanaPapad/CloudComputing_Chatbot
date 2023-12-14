@@ -1,2 +1,60 @@
 \section{Background}
 \label{sec:background}
+In this section we provide some general knowledge about the terminology we use
+and the tools used in our project.
+A large language model is a deep learning algorithm that performs tasks
+regarding
+natural language. These tasks are called natural language processing tasks
+(NLP). In this project we do not create and train a LLM model from scratch
+instead, we use the OpenAI API for our requests and leverage it with prompt
+engineering.
+Prompt engineering is the process of structuring text in a way that a LLM can
+understand and process. In layman's terms is a way to tell the LLM what tasks
+should perform.
+We implement our chatbot using Python programming language and some useful
+libraries
+along with a vector store database.
+
+A vector store database is a kind of
+database that stores data using mathematical representations. These
+mathematical
+representations are called vector embeddings. Vector embeddings is a very
+useful
+as they are a way to convert words and sentences into vectors of numbers that
+capture
+their semantic meaning and relationships. These embeddings are stored in a
+special type of
+database called a vector store database.
+Below we present the different tools we used in this project and how.
+
+\begin{enumerate}
+    \item LangChain \cite{langchain} is a framework designed to simplify
+          creation of
+          applications using large language models (LLMs). We use LangChain to
+          easily communicate with the vector store database and the OpenAI API.
+
+    \item We used Chroma DB \cite{chromadb} as a vector store database. It is
+          an open-source vector store database, which provides the
+          tools for building a knowledge base for LLMs. Chroma is an AI-native
+          database, and can be easily used with Langchain. It also operates as
+          a Python library, hiding the complexity of a native database.
+
+    \item OpenAi is service that allows developers to integrate advanced
+          natural language processing capabilities into their applications. We
+          incorporate the OpenAI API to create embeddings for our data and
+          query the LLMs
+          offered by the
+          service such as the "GPT 3.5 turbo" which is the LLM we use in our
+          project.
+
+    \item Fogify is an emulation Framework for modelling,
+          deploying and
+          experimenting
+          with fog testbeds. Provides a toolset to model complex emulated fog
+          topologies. We use the Fogify documentation to create a dataset that
+          will be
+          used in the prompt engineering when querying the LLM.
+    \item Python is a high-level programming language known for its
+          readability and simplicity. We use Python to create the chatbot and
+          interconnect the various components mentioned above.
+\end{enumerate}
