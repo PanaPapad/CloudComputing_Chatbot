@@ -1,79 +1,66 @@
 import os
 import re
-from langchain.vectorstores import Chroma
-from langchain.document_loaders import TextLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.text_splitter import CharacterTextSplitter,RecursiveCharacterTextSplitter
-from langchain.docstore.document import Document
-from langchain.document_transformers import Html2TextTransformer
-from urllib.parse import urljoin
-import requests
-from bs4 import BeautifulSoup
-from langchain.document_loaders import AsyncHtmlLoader
+from langchain.vectorstores import Chroma  # Importing Chroma vector stores
+from langchain.document_loaders import TextLoader  # Importing TextLoader for documents
+from langchain.embeddings.openai import OpenAIEmbeddings  # Importing OpenAI Embeddings
+from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTextSplitter  # Importing text splitters
+from langchain.docstore.document import Document  # Importing Document from langchain
+from langchain.document_transformers import Html2TextTransformer  # Importing Html2TextTransformer
+from urllib.parse import urljoin  # Importing urljoin from urllib.parse
+import requests  # Importing requests library for handling HTTP requests
+from bs4 import BeautifulSoup  # Importing BeautifulSoup for HTML parsing
+from langchain.document_loaders import AsyncHtmlLoader  # Importing AsyncHtmlLoader for loading HTML content asynchronously
+
+# URL to scrape
 urls = "https://ucy-linc-lab.github.io/fogify/"
 
+# Function to check if the script is running inside a Docker container
 def is_docker():
     path = '/proc/self/cgroup'
     return (
         os.path.exists('/.dockerenv') or
         os.path.isfile(path) and any('docker' in line for line in open(path))
     )
-    
 
-
+# Function to clean HTML tags from raw HTML content
 def clean_html(raw_html):
-    # html2text = Html2TextTransformer()
-    # docs_transformed = html2text.transform_documents([raw_html])
-    # print(docs_transformed)
-    # return docs_transformed
-    cleanr = re.compile('<.*?>')
-    cleantext = re.sub(cleanr, '', raw_html)
+    cleanr = re.compile('<.*?>')  # Regular expression to identify HTML tags
+    cleantext = re.sub(cleanr, '', raw_html)  # Removing HTML tags
     return cleantext
 
+# Setting up OpenAI API key
 os.environ["OPENAI_API_KEY"] = "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"
 
+# Initializing OpenAI embeddings and Chroma vector store
 embeddings = OpenAIEmbeddings()
 vectorstore = Chroma("langchain_store", embeddings, persist_directory="./data/CHROMA_DB_STABLE")
-vectorstore.persist()
+vectorstore.persist()  # Persisting the vector store
 
+# Setting the directory for documents based on Docker presence
 if is_docker():
     docs_dir = "./data/documentation"
 else: 
     docs_dir = "./documentation"
 
-# documents=[]
-# Read all documents including subdirectories
-text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
-                                               chunk_overlap=300,separators=[" ", ",", "\n"]
-                                              )
+# Initializing RecursiveCharacterTextSplitter for text splitting
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=300, separators=[" ", ",", "\n"])
+
+# Initializing Html2TextTransformer for transforming HTML to text
 html2text = Html2TextTransformer()
 
+# Looping through files in the specified directory and its subdirectories
 for root, dirs, files in os.walk(docs_dir):
     for file in files:
         print(file)
-        # if file.endswith(".xml") or file.endswith(".md") or file.endswith(".yaml"):
-        #     # Load the document, split it into chunks, embed each chunk and load it into the vector store.
-        #     raw_document = TextLoader(os.path.join(root, file)).load()
-        #     # text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-           
-
-        #     documents = text_splitter.split_documents(raw_document)
-        #     vectorstore.add_documents(documents)
-            
         if file.endswith('.html') :
-            # file_path = os.path.join(root, file)
-            # with open(file_path, 'r', encoding='utf-8') as file:
+            # Loading HTML document and transforming it to text
             raw_document = TextLoader(os.path.join(root, file)).load()
             documents = text_splitter.split_documents(raw_document)
-            documents=html2text.transform_documents(documents)
-            
-            # print(documents)
-            vectorstore.add_documents((documents))
+            documents = html2text.transform_documents(documents)
+            vectorstore.add_documents(documents)  # Adding documents to the vector store
 
-
-        
-            
+# Persisting the updated vector store
 vectorstore.persist()
+
+# Performing similarity search in the vector store
 print(vectorstore.similarity_search("What is Fogify?"))
-
-

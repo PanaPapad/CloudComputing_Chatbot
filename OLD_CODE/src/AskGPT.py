@@ -11,61 +11,53 @@ from langchain.prompts import (
 )
 from langchain.memory import ConversationBufferMemory
 
-# Setting environment variables for API keys
 os.environ["OPENAI_API_KEY"] = "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"
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = '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'
 
-# Initializing the vectorstore using Chroma and OpenAI embeddings
+# Vectorstore
 vectorstore = Chroma("langchain_store", OpenAIEmbeddings(), persist_directory="./data/CHROMA_DB_STABLE")
 
-# Initializing the GPT-3.5 chat model
+# Load GPT-3.5-turbo-1106
 llm = ChatOpenAI()
 
-# Creating a chat prompt template for the conversation
+# Prompt
 prompt = ChatPromptTemplate(
     messages=[
-        # Introduction message about the chatbot and Fogify simulation platform
         SystemMessagePromptTemplate.from_template(
-            "You are a chatbot that is used to talk to users about a simulation platform called Fogify. Fogify is an emulation Framework easing the modeling, deployment and experimentation of fog testbeds..."
-        ),
-        # Placeholder for chat history in the conversation
+            "You are a chatbot that is used to talk to users about a simulation platform called Fogify. Fogify is an emulation Framework easing the modeling, deployment and experimentation of fog testbeds. Fogify provides a toolset to: model complex fog topologies comprised of heterogeneous resources, network capabilities and QoS criteria; deploy the modelled configuration and services using popular containerized infrastructure-as-code descriptions to a cloud or local environment; experiment, measure and evaluate the deployment by injecting faults and adapting the configuration at runtime to test different what-if scenarios that reveal the limitations of a service before introduced to the public." ),
         MessagesPlaceholder(variable_name="chat_history"),
-        # Template to display context in the conversation
         SystemMessagePromptTemplate.from_template(
             "Context: {context}"
         ),
-        # Template for user's question input
         HumanMessagePromptTemplate.from_template("{question}")
     ]
 )
 
-# Setting up memory to store conversation history and input
-memory = ConversationBufferMemory(memory_key='chat_history', input_key="question", max_length=3000, return_messages=True)
+# Memory
+memory = ConversationBufferMemory(memory_key='chat_history',input_key="question", max_length=3000, return_messages=True)
 
-# Creating the Language Learning Model (LLM) chain for conversation flow
+# LLM Chain
 llm_chain = LLMChain(prompt=prompt, llm=llm, verbose=False, memory=memory)
 
-# Function to remove extra spaces from text
 def remove_extra_spaces(text):
     return " ".join(text.split())
 
-# Function to retrieve context based on user's question using the vectorstore
 def get_context(question):
-    docs = vectorstore.similarity_search(question)  # Find similar documents
+    #Get the most similar documents
+    docs = vectorstore.similarity_search(question)
 
     context = ''
-    # Concatenate content of similar documents for context
     for doc in docs:
         doc.page_content = remove_extra_spaces(doc.page_content)
-        context += ' ' + doc.page_content
+        # if(len(context) + len(doc.page_content) > 6000):
+        #     break
+        context += ' '+doc.page_content
     return context
 
-# Function to get user input as a question
 def get_question():
     question = input("\nUser: ")
     return question
 
-# Function to process user's question and generate AI response
 def ask_ai(question):
     context = get_context(question)
     dict = {"question": question, "context": context}
@@ -73,15 +65,15 @@ def ask_ai(question):
     print("CHATBOT: " + response.get("text"))
     print()
 
-# Main function initiating the chatbot interaction
 def main():
-    print("CHATBOT: Hello, I am the Fogify chatbot. How can I help you?")
+    print("CHATBOT: Hello, i am the Fogify chatbot how can i help you.")
     
     while True:
-        question = get_question()  # Get user input as a question
-        if(question == 'exit'):  # Check for exit command
+        question = get_question()
+        if(question == 'exit'):
             break
-        ask_ai(question)  # Process user's question and get AI response
+        ask_ai(question)
 
 if __name__ == "__main__":
     main()
+
