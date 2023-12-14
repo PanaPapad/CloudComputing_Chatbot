@@ -33,7 +33,7 @@ def clean_html(raw_html):
 os.environ["OPENAI_API_KEY"] = "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"
 
 embeddings = OpenAIEmbeddings()
-vectorstore = Chroma("langchain_store", embeddings, persist_directory="./data/CHROMA_DB_test")
+vectorstore = Chroma("langchain_store", embeddings, persist_directory="./data/CHROMA_DB_STABLE")
 vectorstore.persist()
 
 if is_docker():
@@ -44,7 +44,7 @@ else:
 # documents=[]
 # Read all documents including subdirectories
 text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,
-                                               chunk_overlap=0,separators=[" ", ",", "\n"]
+                                               chunk_overlap=300,separators=[" ", ",", "\n"]
                                               )
 html2text = Html2TextTransformer()
 
