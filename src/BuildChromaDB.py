@@ -44,8 +44,8 @@ else:
 # documents=[]
 # Read all documents including subdirectories
 text_splitter=RecursiveCharacterTextSplitter(chunk_size=2000,
-                                               chunk_overlap=300,
-                                               separators=[" ", ",", "\n"])
+                                               chunk_overlap=500
+                                              )
 html2text = Html2TextTransformer()
 
 for root, dirs, files in os.walk(docs_dir):
