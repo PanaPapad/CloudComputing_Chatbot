@@ -15,7 +15,7 @@ os.environ["OPENAI_API_KEY"] = "sk-WzRuqKRHH777Ai7MLD3gT3BlbkFJR1cRkq8fMHHQlohJn
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = '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'
 
 # Vectorstore
-vectorstore = Chroma("langchain_store", OpenAIEmbeddings(), persist_directory="./data/CHROMA_DB_2")
+vectorstore = Chroma("langchain_store", OpenAIEmbeddings(), persist_directory="./data/CHROMA_DB_test")
 
 # Load GPT-3.5-turbo-1106
 llm = ChatOpenAI()
@@ -49,8 +49,8 @@ def get_context(question):
     context = ''
     for doc in docs:
         doc.page_content = remove_extra_spaces(doc.page_content)
-        if(len(context) + len(doc.page_content) > 6000):
-            break
+        # if(len(context) + len(doc.page_content) > 6000):
+        #     break
         context += ' '+doc.page_content
     return context
 
